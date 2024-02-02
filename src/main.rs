@@ -2,7 +2,14 @@ use bevy::prelude::*;
 use bevy_ecs_tilemap::{TilemapPlugin, TilemapBundle};
 
 fn main() {
-    App::new().add_plugins(ExamplePlugin).run();
+    App::new()
+        .add_plugins((DefaultPlugins, TilemapPlugin))
+        .add_state::<ExampleState>()
+        .add_systems(Startup, (spawn_camera, spawn_tilemap_example))
+        .add_systems(OnExit(ExampleState::State1), despawn_tilemap_example)
+        .add_systems(OnEnter(ExampleState::State2), spawn_sprite_example)
+        .add_systems(Update, change_example_state)
+        .run();
 }
 
 #[derive(States, Default, Hash, Clone, Copy, Eq, PartialEq, Debug)]
@@ -14,22 +21,6 @@ pub enum ExampleState {
 
 #[derive(Component)]
 pub struct ExampleTilemap;
-
-pub struct ExamplePlugin;
-
-impl Plugin for ExamplePlugin {
-    fn build(&self, app: &mut App) {
-        app.add_plugins((DefaultPlugins, TilemapPlugin));
-
-        app.add_state::<ExampleState>();
-
-        app.add_systems(Startup, (spawn_camera, spawn_tilemap_example));
-        app.add_systems(OnExit(ExampleState::State1), despawn_tilemap_example);
-        app.add_systems(OnEnter(ExampleState::State2), spawn_sprite_example);
-
-        app.add_systems(Update, change_example_state);
-    }
-}
 
 pub fn spawn_camera(mut commands: Commands) {
     commands.spawn(Camera2dBundle::default());
