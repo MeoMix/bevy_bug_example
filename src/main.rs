@@ -1,15 +1,17 @@
+mod bevy_egui;
+
 // This code should draw a white square in the center of the window if it runs properly.
 // One in every 5-10 runs no white square will render.
 // If the `multithreaded` feature is enabled in bevy's Cargo.toml then the square "always" renders (if it's a timing issue it becomes sufficiently difficult to surface with multithreading)
 use bevy::prelude::*;
-use bevy_egui::EguiPlugin;
+use bevy::render::{Render, RenderApp, RenderSet};
 use bevy_ecs_tilemap::prelude::*;
 
 fn main() {
     App::new()
     .add_plugins((DefaultPlugins, TilemapPlugin))
     .add_systems(Startup, (spawn_camera, spawn_tilemap).chain())
-    .add_plugins(EguiPlugin)
+    .add_plugins(ExamplePlugin)
     .run();
 }
 
@@ -41,3 +43,19 @@ pub fn spawn_tilemap(mut commands: Commands) {
         },
     );
 }
+
+pub struct ExamplePlugin;
+
+impl Plugin for ExamplePlugin {
+    fn build(&self, app: &mut App) {
+    }
+
+    fn finish(&self, app: &mut App) {
+        if let Ok(render_app) = app.get_sub_app_mut(RenderApp) {
+            render_app.add_systems(Render, test_system.in_set(RenderSet::Queue));
+        }
+    }
+}
+
+// IMPORTANT: need to have commands as an argument here or bug doesn't reproduce!
+pub fn test_system(mut commands: Commands) {}
