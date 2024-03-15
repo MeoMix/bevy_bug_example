@@ -2,6 +2,27 @@
   "name": "rust-development",
   "build": {
     "dockerfile": "Dockerfile"
-  }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "serayuzgur.crates",
+        "GitHub.copilot",
+        "eamodio.gitlens",
+        "vadimcn.vscode-lldb"
+      ]
+    }
+  },
+  "appPort": ["8080:8080"],
+  "runArgs": [
+    "--gpus=all",
+    "--device=/dev/dxg",
+    "--device=/dev/dri/card0",
+    "--device=/dev/dri/renderD128"
+  ],
+  "mounts": [
+    "source=/usr/lib/wsl,target=/usr/lib/wsl,type=bind"
+  ]
 }
-  
