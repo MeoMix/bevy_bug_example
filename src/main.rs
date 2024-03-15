@@ -35,7 +35,6 @@ pub fn spawn_tilemap(mut commands: Commands) {
 
     commands.entity(tilemap_entity).insert(
         TilemapBundle {
-            grid_size: TilemapGridSize { x: 1.0, y: 1.0 },
             size: map_size,
             storage: tile_storage,
             tile_size: TilemapTileSize { x: 128.0, y: 128.0 },
