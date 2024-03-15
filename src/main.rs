@@ -1,5 +1,3 @@
-mod bevy_egui;
-
 // This code should draw a white square in the center of the window if it runs properly.
 // One in every 5-10 runs no white square will render.
 // If the `multithreaded` feature is enabled in bevy's Cargo.toml then the square "always" renders (if it's a timing issue it becomes sufficiently difficult to surface with multithreading)
