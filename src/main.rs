@@ -27,7 +27,6 @@ pub fn spawn_tilemap(mut commands: Commands) {
     let entity = commands.spawn(TileBundle {
         position: tile_pos,
         tilemap_id: TilemapId(tilemap_entity),
-        texture_index: TileTextureIndex(0),
         ..default()
     }).id();
 
