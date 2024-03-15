@@ -24,13 +24,13 @@ pub fn spawn_tilemap(mut commands: Commands) {
 
     let tile_pos = TilePos { x: 0, y: 0 };
 
-    let entity = commands.spawn(TileBundle {
+    let tile_entity = commands.spawn(TileBundle {
         position: tile_pos,
         tilemap_id: TilemapId(tilemap_entity),
         ..default()
     }).id();
 
-    tile_storage.set(&tile_pos, entity);
+    tile_storage.set(&tile_pos, tile_entity);
 
     commands.entity(tilemap_entity).insert(
         TilemapBundle {
